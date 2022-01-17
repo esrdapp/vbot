@@ -14,52 +14,41 @@ the .env file, so any native coin needs to be wrapped.
 
 The following parameters must be added to the .env file:
 
+# RPC endpoint of chain
+RPC_URL =           // (for example: https://data-seed-prebsc-1-s1.binance.org:8545 for BSC testnet)
 
-## your wallet address
-wallet_address: 0x0;          // setup a testnet wallet to test
+# Dex Router address, e.g. Uniswap/Pancake/Sushi (Pancakeswap)
+DEX_ROUTER_ADDRESS =        // (for example: 0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3 is pancakeswap's uniswapV2Router address on BSC testnet)
 
-## your wallet private key
-private_key: 0x0;             // add wallet private key to test
+# Contract address of first token
+TOKEN_0_ADDRESS =          // (for example: 0x094616f0bdfb0b526bd735bf66eca0ad254ca81f is the contract address for WBNB on BSC testnet)
 
-## the Uniswap/Pancake/Sushi v2 router contract
-dex_swap_router: 0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3;  //bsc testnet - pancakeswap router contract (https://tinyurl.com/3nbt7r7k)
+# Contract address of second token
+TOKEN_1_ADDRESS =          // (for example: 0x7afd064dae94d73ee37d19ff2d264f5a2903bbb0 is the contract address for USDT on BSC testnet)
 
-## blockchain ID of network you wish to trade on
-chain_id: 97;    // bsc testnet
+# Wallet private key
+WALLET_PRIVATE_KEY =       // you need to add the private key for the wallet the bot will trade from (remember, the wallet needs funding of token 0 and token 1)
 
-## RPC endpoint of chain
-chain_rpc_url: "https://data-seed-prebsc-1-s1.binance.org:8545";    //bsc testnet 
+# Minimum amount of trades before bot switches direction from buy/sell
+CONSECUTIVE_TRADES_BEFORE_SWITCH_MIN = 
 
-## Chain explorer
-chain_block_explorer: "http://testnet.bscscan.com/";     // bsc testnet
+# Maximum amount of trades before bot switches direction from buy/sell
+CONSECUTIVE_TRADES_BEFORE_SWITCH_MAX = 
 
-## Contract address of first token
-token_0_address: 0x094616f0bdfb0b526bd735bf66eca0ad254ca81f;    //WBNB
+# Minimum amount to trade for token 0
+TOKEN_0_MIN = 
 
-## Contract address of second token
-token_1_address: 0x7afd064dae94d73ee37d19ff2d264f5a2903bbb0;    //USDT
+# Maximum amount to trade for token 0
+TOKEN_0_MAX = 
 
-## minimum amount of trades before bot switches direction from buy/sell
-consecutive_trades_before_switch_min: 1;
+# Minimum amount to trade for token 1
+TOKEN_1_MIN = 
 
-## maximum amount of trades before bot switches direction from buy/sell
-consecutive_trades_before_switch_max: 5;
+# Maximum amount to trade for token 1
+TOKEN_1_MAX = 
 
-## minimum amount to trade for token 0
-token_0_min: 1;
+# Minimum amount of time (in seconds) between trades
+TIME_BETWEEN_TRADES_MIN = 60       // suggest you leave this at a MINIMUM of 60 seconds to allow the trades to complete
 
-## maximum amount to trade for token 0
-token_0_max: 99;
-
-## minimum amount to trade for token 1
-token_1_min: 1;
-
-## maximum amount to trade for token 1
-token_1_max: 99;
-
-## minimum amount of time (in seconds) between trades
-time_between_trades_min: 60;
-
-## maximum amount of time (in seconds) between trades
-time_between_trades_max: 3600;
-"# vbot" 
+# Maximum amount of time (in seconds) between trades
+TIME_BETWEEN_TRADES_MAX = 3600
