@@ -12,7 +12,14 @@ If you were trading between native coins, (e.g BNB on pancakeswap) then you woul
 native coin to conform to ERC20 token standards and would therefore have a contract address. Contract addresses are required for both token 0 and token 1 in
 the .env file, so any native coin needs to be wrapped.
 
-The following parameters must be added to the .env file:
+To install, create a new folder, then clone the repo:
+
+- Run "npm install" to install dependencies
+- Set the .env correctly (see below for more details)
+- Run "npm run start" to launch the bot
+
+
+The following parameters must be added to the .env file: (if using the .env.example file, remember to rename it to .env)
 
 **RPC endpoint of chain**
 RPC_URL =           // (for example: https://data-seed-prebsc-1-s1.binance.org:8545 for BSC testnet)
