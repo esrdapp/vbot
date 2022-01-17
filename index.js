@@ -4,6 +4,8 @@ const {
     getRandomInteger,
     sleep
 } = require("./utils");
+
+// the following constants are generic and can be used with any uniswap fork and any standard ERC20 token
 const pancakeRouterAbi = require('./abis/PancakeRouter.json');
 const token0Abi = require('./abis/WBNB.json');
 const token1Abi = require('./abis/USDT.json');
