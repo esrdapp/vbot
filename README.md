@@ -1,21 +1,19 @@
-# Volumn Increase Automation Bot
+# DEX Volume Bot (VBot) - Automated Trading Bot
 
-VBOT v.1.0 config file
+VBOT v.1.0
 
-config file for volume trading bot for uniswap or other forks of uniswap such as PancakeSwap or SushiSwap.
+The bot will trade random amounts (between a min and max value) at random times (between a min and max value) for a random number of consecutive trades, before switching from buy -> sell -> buy -> sell, etc (between a min and max value)
 
-To begin with, the bot will generate a random number between "consecutive_trades_before_switch_min" and "consecutive_trades_before_switch_max" and store this value as variable "consecutive_trades = x"
+This process continues over and over, trading at different times and at different amounts. This helps increase trade volume on the targetted token pair.
 
-Next it will generate another random number and store this as a variable for "trade_amount" (between the min max values) and finally it will generate a random number as a "time_delay" variable (between min and max time) before executing the trade at the amount "trade_amount". It will increment the value for "trades_executed"
-Once the trade has been executed, the timer will run the amount of time shown in "time_delay", before once again generating another amount value and another time delay value, and repeat the trade execution.
+Please note that you would need tokens for both sides of the pair in the wallet associated with the private key that you add to the .env file.
 
-Eventually when "trades_executed" == "consecutive_trades" the bot will switch from buy to sell (or from sell to buy) and the value for "trades_executed" will be reset back to 0 and another random number will be generated for "consecutive_trades"
+If you were trading between native coins, (e.g BNB on pancakeswap) then you would first need to "wrap" your BNB into wrapped BNB to allow the 
+native coin to conform to ERC20 token standards and would therefore have a contract address. Contract addresses are required for both token 0 and token 1 in
+the .env file, so any native coin needs to be wrapped.
 
-This process continues over and over, so there will look to be a lot of seemingly random trades for buys and sells, at different times and at different amounts. This helps the token pair being traded on look very natural. 
+The following parameters must be added to the .env file:
 
-Bot can be tested on Binance Smart Chain by obtaining free testnet BNB from the faucet https://testnet.binance.org/faucet-smart
-
-You than then convert some of the BNB to token 0 and token 1 in your wallet at the testnet pancakeswap DEX - https://pancake.kiemtienonline360.com/#/swap
 
 ## your wallet address
 wallet_address: 0x0;          // setup a testnet wallet to test
