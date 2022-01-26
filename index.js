@@ -4,8 +4,6 @@ const {
     getRandomInteger,
     sleep
 } = require("./utils");
-
-// the following constants are generic and can be used with any uniswap fork and any standard ERC20 token
 const pancakeRouterAbi = require('./abis/PancakeRouter.json');
 const token0Abi = require('./abis/WBNB.json');
 const token1Abi = require('./abis/USDT.json');
@@ -52,28 +50,33 @@ const token1Contract = new Contract(
 const SWAP_COMMAND = {
     BUY: "BUY",
     SELL: "SELL",
-};
-
+};                                                                                                                                            
 let executedTradesCounter = 0, consecutiveTradesCount = 0;
 let exchange = SWAP_COMMAND.SELL;
 
-async function sell(contract, token0, token1, to, amount) {
-    const deadline = Math.round((Date.now() + 30 * 1000) / 1000);   // expires in 30s
-    
-    await contract.swapExactETHForTokens(0, [token0, token1], to, deadline.toString(), { value: utils.parseEther(amount.toString()) });
-}
-
 async function buy(contract, token0, token1, to, amount) {
     const deadline = Math.round((Date.now() + 30 * 1000) / 1000);   // expires in 30s
-    
-    await contract.swapExactTokensForETH(
-        utils.parseEther(amount.toString()), 
+
+    await
+    contract.swapExactTokensForTokens   // If token 0 is a "native" coin, e.g. XDAI, then change to contract.swapExactTokensForETH
+    (
+        utils.parseEther(amount.toString()),
         '0',
-        [token0, token1], 
-        to, 
+        [token0, token1],
+        to,
         deadline.toString()
     );
 }
+
+async function sell(contract, token0, token1, to, amount) {
+    const deadline = Math.round((Date.now() + 30 * 1000) / 1000);   // expires in 30s
+
+    await
+    contract.swapExactTokensForTokens    // If token 0 is a "native" coin, e.g. XDAI, then change to contract.swapExactETHForTokens
+    (0, [token0, token1], to, deadline.toString(), { value: utils.parseEther(amount.toString()) });
+}
+
+
 
 async function trade() {
     // if executedTradesCounter is equal to consecutiveTradesCount, then switch buy & sell.
@@ -91,11 +94,11 @@ async function trade() {
     }
 
     console.log(`-------------- ${executedTradesCounter + 1} / ${consecutiveTradesCount} --------------`);
-
-    // trade
+    
+        // trade
     if (exchange == SWAP_COMMAND.BUY) {
-        // buy
-        console.log('Buying...');
+        // sell
+        console.log('Selling...');
 
         // get allowance of dex contract
         const allowAmount = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
@@ -103,19 +106,19 @@ async function trade() {
         if (allowed.lt(allowAmount)) {
             await token1Contract.approve(DEX_ROUTER_ADDRESS, allowAmount);
         }
-        
+
         let tradeAmount = getRandomInteger(+TOKEN_1_MIN, +TOKEN_1_MAX);
         await buy(pancakeRouterContract, TOKEN_1_ADDRESS, TOKEN_0_ADDRESS, signer.address, tradeAmount);
 
-        console.log(`${tradeAmount} bought successfully!`);
+        console.log(`${tradeAmount} of Token 1 sold successfully!`);
     } else {
-        // sell
-        console.log('Selling...');
+        // buy
+        console.log('Buying...');
 
         let tradeAmount = getRandomInteger(+TOKEN_0_MIN, +TOKEN_0_MAX);
         await sell(pancakeRouterContract, TOKEN_0_ADDRESS, TOKEN_1_ADDRESS, signer.address, tradeAmount);
 
-        console.log(`${tradeAmount} sold successfully!`);
+        console.log(`${tradeAmount} of Token 0 spent on buying Token 1 successfully!`);
     }
 
     // increase executed trades counter
@@ -139,3 +142,6 @@ async function main() {
 }
 
 main();
+    
+    
+
